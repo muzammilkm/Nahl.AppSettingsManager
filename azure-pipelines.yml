@@ -27,7 +27,7 @@ steps:
 - task: PublishVisualStudioExtension@3
   inputs:
     connectedServiceName: 'Visual Studio MarketPlace'
-    vsixFile: '''$(Build.SourcesDirectory)\src\Nahl.AppSettingManager.VisualStudio\bin\Release\Nahl.AppSettingManager.VisualStudio.vsix'''
-    manifestFile: '''$(Build.SourcesDirectory)\src\publishManifest.json'
+    vsixFile: 'src\Nahl.AppSettingManager.VisualStudio\bin\Release\Nahl.AppSettingManager.VisualStudio.vsix'
+    manifestFile: 'src\publishManifest.json'
     publisherId: 'muzammilkm'
     ignoreWarnings: 'VSIXValidatorWarning01,VSIXValidatorWarning02'
