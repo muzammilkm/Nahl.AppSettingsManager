@@ -1,6 +1,6 @@
 {
     "$schema": "http://json.schemastore.org/vsix-publish",
-    "categories": [ "coding", "visual studio extensions" ],
+    "categories": [ "build", "coding" ],
     "identity": {
         "internalName": "NahlAppSettingManagerVisualStudio",
         "displayName": "Nahl.AppSettingManager.VisualStudio"
