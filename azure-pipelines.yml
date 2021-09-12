@@ -10,6 +10,13 @@ pool:
   vmImage: 'windows-latest'
 
 steps:
+- task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
+  inputs:
+    command: 'restore'
+    restoreSolution: 'src\Nahl.AppSettingManager.sln'
+
 - task: VSBuild@1
   inputs:
     solution: 'src\Nahl.AppSettingManager.sln'
