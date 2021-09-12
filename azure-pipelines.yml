@@ -1,0 +1,20 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+
+- task: PublishVisualStudioExtension@3
+  inputs:
+    connectedServiceName: 'Visual Studio MarketPlace'
+    vsixFile: '''$(Build.SourcesDirectory)\src\Nahl.AppSettingManager.VisualStudio\bin\Release\Nahl.AppSettingManager.VisualStudio.vsix'''
+    manifestFile: '''$(Build.SourcesDirectory)\src\publishManifest.json'
+    publisherId: 'muzammilkm'
+    ignoreWarnings: 'VSIXValidatorWarning01,VSIXValidatorWarning02'
