@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <Extern href="stdidcmd.h" />
+  <Extern href="vsshlids.h" />
+  <Include href="KnownImageIds.vsct" />
+  <Commands package="guidAppSettingManagerPackage">
+
+    <Groups>
+      <Group guid="guidAppSettingManagerPackageCmdSet" id="idAppSettingManagerMenuGroup">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_SOLNNODE" />
+      </Group>
+      <!--<Group guid="guidAppSettingManagerPackageCmdSet" id="idAppSettingManagerMenuGroup">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_PROJNODE"/>
+      </Group>-->
+      <!--<Group guid="guidAppSettingManagerPackageCmdSet" id="idAppSettingManagerMenuGroup">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_XPROJ_MULTIPROJ"/>
+      </Group>
+      <Group guid="guidAppSettingManagerPackageCmdSet" id="idAppSettingManagerMenuGroup">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_WEBPROJECT"/>
+      </Group>
+      <Group guid="guidAppSettingManagerPackageCmdSet" id="idAppSettingManagerMenuGroup">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_WEBFOLDER"/>
+      </Group>-->
+    </Groups>
+
+    <Buttons>
+      <Button guid="guidAppSettingManagerPackageCmdSet" id="idManageAppSettingInSolutionCommand" priority="0x0100" type="Button">
+        <Parent guid="guidAppSettingManagerPackageCmdSet" id="0" />
+        <Icon guid="ImageCatalogGuid" id="ConfigurationEditor" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <ButtonText>Manage AppSetting for Solution...</ButtonText>
+        </Strings>
+      </Button>
+
+      <!--<Button guid="guidAppSettingManagerPackageCmdSet" id="idManageAppSettingInProjectCommand" priority="0x0100" type="Button">
+        <Parent guid="guidAppSettingManagerPackageCmdSet" id="0" />
+        <Icon guid="ImageCatalogGuid" id="ConfigurationEditor" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <ButtonText>Manage AppSetting...</ButtonText>
+        </Strings>
+      </Button>-->
+    </Buttons>
+  </Commands>
+
+  <CommandPlacements>
+    <CommandPlacement guid="guidAppSettingManagerPackageCmdSet" id="idManageAppSettingInSolutionCommand" priority="0x900">
+      <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_SOLUTION_BUILD" />
+    </CommandPlacement>
+
+    <!--<CommandPlacement guid="guidAppSettingManagerPackageCmdSet" id="idManageAppSettingInProjectCommand" priority="0x900">
+      <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJECT_BUILD"/>
+    </CommandPlacement>-->
+
+    <!--<CommandPlacement guid="guidAppSettingManagerPackageCmdSet" id="idAppSettingManagerMenuGroup" priority="0xFF00">
+      <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_SOLUTION_BUILD"/>
+    </CommandPlacement>
+    <CommandPlacement guid="guidAppSettingManagerPackageCmdSet" id="idAppSettingManagerMenuGroup" priority="0xFF00">
+      <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_WEBPROJECT"/>
+    </CommandPlacement>
+    <CommandPlacement guid="guidAppSettingManagerPackageCmdSet" id="idAppSettingManagerMenuGroup" priority="0xFF00">
+      <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_SOLNNODE"/>
+    </CommandPlacement>-->
+
+  </CommandPlacements>
+
+  <Symbols>
+    <!-- This is the package guid. -->
+    <GuidSymbol name="guidAppSettingManagerPackage" value="{0b11046e-a111-44d9-a129-fb2f61aac3c4}" />
+
+    <!-- This is the guid used to group the menu commands together -->
+    <GuidSymbol name="guidAppSettingManagerPackageCmdSet" value="{c2db6453-683d-4cb4-8355-1415067240cf}">
+      <IDSymbol name="idAppSettingManagerMenuGroup" value="0x1020" />
+      <IDSymbol name="idManageAppSettingInSolutionCommand" value="0x0100" />
+    </GuidSymbol>
+  </Symbols>
+</CommandTable>

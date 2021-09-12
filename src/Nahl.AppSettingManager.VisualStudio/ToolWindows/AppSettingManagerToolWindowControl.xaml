@@ -1,0 +1,162 @@
+﻿<UserControl x:Class="Nahl.AppSettingManager.VisualStudio.ToolWindows.AppSettingManagerToolWindowControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"             
+             xmlns:vs="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.15.0"
+             xmlns:ui="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.15.0"
+              xmlns:util="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Utilities"
+             xmlns:imaging="clr-namespace:Microsoft.VisualStudio.Imaging;assembly=Microsoft.VisualStudio.Imaging"
+             xmlns:catalog="clr-namespace:Microsoft.VisualStudio.Imaging;assembly=Microsoft.VisualStudio.ImageCatalog"  
+             mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800" Name="AppSettingManagerToolWindow">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <!--<ResourceDictionary>
+            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Static vs:VsResourceKeys.ThemedDialogButtonStyleKey}}"></Style>
+            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Static vs:VsResourceKeys.ThemedDialogTextBoxStyleKey}}"></Style>
+            <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Static vs:VsResourceKeys.ThemedDialogCheckBoxStyleKey}}"></Style>
+            <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Static vs:VsResourceKeys.ThemedDialogComboBoxStyleKey}}"></Style>
+            <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Static vs:VsResourceKeys.ThemedDialogLabelStyleKey}}">
+                <Setter Property="Padding" Value="0"></Setter>
+            </Style>
+        </ResourceDictionary>-->
+    </UserControl.Resources>
+    <DockPanel Height="Auto" Width="Auto" LastChildFill="True">
+        <Border DockPanel.Dock="Top" Margin="20" >
+            <StackPanel Orientation="Vertical">
+                <Grid Height="55">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"></RowDefinition>
+                        <RowDefinition Height="5"></RowDefinition>
+                        <RowDefinition Height="25"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBox Grid.Column="0" Grid.Row="0" Padding="0,3,25,0" Text="{Binding SearchVariable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <Grid>
+                        <Border Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right">
+                            <imaging:CrispImage
+                            Moniker="{x:Static catalog:KnownMonikers.Search}"
+                            Margin="5" Height="16" Width="16" />
+                        </Border>
+                        <TextBlock Text="Search variable..." IsHitTestVisible="False" Margin="5, 5">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="Visibility" Value="Visible"/>
+            <Style.Triggers>
+                
+                                        <DataTrigger Binding="{Binding IsSearchVariable}" Value="True">
+                    <Setter Property="Visibility" Value="Hidden"/>
+                </DataTrigger>
+            </Style.Triggers>                    
+        </Style>
+    </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>                    
+                    <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button ToolTip="Clear" Click="btnClear_Click" MinWidth="32" Margin="3,0">
+                            <imaging:CrispImage
+                                Moniker="{x:Static catalog:KnownMonikers.DeleteFilter}"
+                                Margin="2" Height="16" Width="16" />
+                        </Button>
+                        <Button ToolTip="Save" Click="btnSave_Click" MinWidth="32"  Margin="3,0" IsEnabled="{Binding IsDirty}">
+                            <imaging:CrispImage
+                                Moniker="{x:Static catalog:KnownMonikers.Save}"
+                                Margin="2" Height="16" Width="16" />
+                        </Button>
+                    </StackPanel>
+                    <Grid Grid.Column="0" Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*" />
+                            <ColumnDefinition Width="5" />
+                            <ColumnDefinition Width="5*" />
+                        </Grid.ColumnDefinitions>
+                        <ComboBox Grid.Column="0" Name="cbProjList" IsEditable="False" IsReadOnly="False" ItemsSource="{Binding Projects}"
+                                  SelectedItem="{Binding SelectedProject}" SelectionChanged="cbProjList_SelectionChanged">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox Content="{Binding ProjectName}" IsChecked="{Binding IsChecked}" HorizontalAlignment="Stretch" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                            <ComboBox.ItemContainerStyle>
+                                <Style TargetType="{x:Type ComboBoxItem}">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                </Style>
+                            </ComboBox.ItemContainerStyle>
+                        </ComboBox>
+                        <Label Grid.Column="0" Content="{Binding SelectedProjectNamePreview}" IsHitTestVisible="False" Padding="5" />
+                        <ComboBox Grid.Column="2" Name="cbJsonFileList" IsEditable="False" IsReadOnly="False" ItemsSource="{Binding AppSettingJsonFiles}"
+                          SelectedItem="{Binding SelectedAppSettingJsonFile}" SelectionChanged="cbJsonFileList_SelectionChanged">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox Content="{Binding Path=FileName}" IsChecked="{Binding IsChecked, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                            <ComboBox.ItemContainerStyle>
+                                <Style TargetType="{x:Type ComboBoxItem}">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                </Style>
+                            </ComboBox.ItemContainerStyle>
+                        </ComboBox>
+                        <Label Grid.Column="2" Content="{Binding SelectedAppSettingFileNamePreview}" IsHitTestVisible="False" Padding="5"/>
+                    </Grid>
+                </Grid>
+            </StackPanel>
+        </Border>
+        <DataGrid DockPanel.Dock="Bottom" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" AutoGenerateColumns="False"
+              ItemsSource="{Binding VariablesView}" RowHeaderWidth="0" ColumnHeaderHeight="25">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="" Width="40" CanUserSort="False" CanUserResize="False">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Tag="{Binding}" Command="Delete" MinWidth="32">
+                                <imaging:CrispImage
+                                    Moniker="{x:Static catalog:KnownMonikers.Cancel}"
+                                    Height="16"
+                                    Width="16" />
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Name" Width="3*" Binding="{Binding Name}">
+                    <DataGridTextColumn.EditingElementStyle>
+                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                        </Style>
+                    </DataGridTextColumn.EditingElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Value" Width="3*" Binding="{Binding Value}">
+                    <DataGridTextColumn.EditingElementStyle>
+                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                        </Style>
+                    </DataGridTextColumn.EditingElementStyle>
+                </DataGridTextColumn>
+                <DataGridComboBoxColumn Header="App Settings" Width="2*" SelectedValueBinding="{Binding FileId}" DisplayMemberPath="FileName" SelectedValuePath="FileId">
+                    <DataGridComboBoxColumn.ElementStyle>
+                        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.AppSettingJsonFiles, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
+                        </Style>
+                    </DataGridComboBoxColumn.ElementStyle>
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="{x:Type ComboBox}">
+                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.AppSettingJsonFiles, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                </DataGridComboBoxColumn>
+                <DataGridComboBoxColumn Header="Project" Width="2*" SelectedValueBinding="{Binding ProjectId}" DisplayMemberPath="ProjectName" SelectedValuePath="ProjectId">
+                    <DataGridComboBoxColumn.ElementStyle>
+                        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Projects, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
+                        </Style>
+                    </DataGridComboBoxColumn.ElementStyle>
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Projects, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                </DataGridComboBoxColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</UserControl>
