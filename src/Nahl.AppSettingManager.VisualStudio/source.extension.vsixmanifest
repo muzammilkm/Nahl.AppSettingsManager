@@ -4,7 +4,10 @@
         <Identity Id="488f9ae6-3c3a-4583-a908-d7443b7e0b49" Version="1.0" Language="en-US" Publisher="Muzammil Khaja Mohammed" />
         <DisplayName>Nahl.AppSettingManager.VisualStudio</DisplayName>
         <Description xml:space="preserve">Manage AppSetting for .net projects in VisualStudio</Description>
+        <Icon>Resources\icon.png</Icon>
+        <PreviewImage>Resources\preview.png</PreviewImage>
         <Tags>AppSetting; Manager; JSON; Configuration; Multiple Projects; Solution;</Tags>
+        <Preview>true</Preview>
     </Metadata>
     <Installation>
         <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[15.0,17.0)" />
