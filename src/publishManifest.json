@@ -1,6 +1,10 @@
 {
     "$schema": "http://json.schemastore.org/vsix-publish",
     "categories": [ "coding", "visual studio extensions" ],
+    "identity": {
+        "internalName": "NahlAppSettingManagerVisualStudio",
+        "displayName": "Nahl.AppSettingManager.VisualStudio"
+    },
     "overview": "overview.md",
     "priceCategory": "free",
     "publisher": "muzammilkm",
