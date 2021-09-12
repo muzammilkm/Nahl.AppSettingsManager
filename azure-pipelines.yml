@@ -10,6 +10,12 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
+- task: VSBuild@1
+  inputs:
+    solution: 'src\Nahl.AppSettingManager.sln'
+    configuration: 'release'
+    restoreNugetPackages: true
+    createLogFile: true
 
 - task: PublishVisualStudioExtension@3
   inputs:
