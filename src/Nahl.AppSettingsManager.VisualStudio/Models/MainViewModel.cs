@@ -7,12 +7,12 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Data;
-using Nahl.AppSettingManager.VisualStudio.Models;
+using Nahl.AppSettingsManager.VisualStudio.Models;
 using EnvDTE80;
 using System.IO;
 using Newtonsoft.Json.Linq;
 
-namespace Nahl.AppSettingManager.VisualStudio
+namespace Nahl.AppSettingsManager.VisualStudio
 {
     public class MainViewModel : INotifyPropertyChanged
     {

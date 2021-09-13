@@ -1,24 +1,24 @@
 ﻿using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
-using Nahl.AppSettingManager.VisualStudio.Commands;
-using Nahl.AppSettingManager.VisualStudio.Extensions;
-using Nahl.AppSettingManager.VisualStudio.ToolWindows;
+using Nahl.AppSettingsManager.VisualStudio.Commands;
+using Nahl.AppSettingsManager.VisualStudio.Extensions;
+using Nahl.AppSettingsManager.VisualStudio.ToolWindows;
 using System;
 using System.Runtime.InteropServices;
 using System.Threading;
 using Task = System.Threading.Tasks.Task;
 
-namespace Nahl.AppSettingManager.VisualStudio
+namespace Nahl.AppSettingsManager.VisualStudio
 {
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [InstalledProductRegistration("#110", "#112", StringConstants.ProductVersion)]
     [Guid(GuidConstants.PackageGuidString)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
-    [ProvideToolWindow(typeof(AppSettingManagerToolWindow), Style = VsDockStyle.MDI, MultiInstances = false, Transient = true, DocumentLikeTool = true)]
-    public sealed class AppSettingManagerPackage : AsyncPackage
+    [ProvideToolWindow(typeof(AppSettingsManagerToolWindow), Style = VsDockStyle.MDI, MultiInstances = false, Transient = true, DocumentLikeTool = true)]
+    public sealed class AppSettingsManagerPackage : AsyncPackage
     {
-        public static AppSettingManagerPackage Instance { get; internal set; }
+        public static AppSettingsManagerPackage Instance { get; internal set; }
 
         public DTE2 DTE { get; private set; }
 
@@ -30,7 +30,7 @@ namespace Nahl.AppSettingManager.VisualStudio
 
             DTE = await GetServiceAsync(typeof(DTE)) as DTE2;
 
-            await ManageAppSettingCommand.InitializeAsync(this);
+            await ManageAppSettingsCommand.InitializeAsync(this);
         }
     }
 }

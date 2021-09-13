@@ -2,13 +2,13 @@
     "$schema": "http://json.schemastore.org/vsix-publish",
     "categories": [ "build", "coding" ],
     "identity": {
-        "internalName": "NahlAppSettingManagerVisualStudio",
-        "displayName": "Nahl.AppSettingManager.VisualStudio"
+        "internalName": "NahlAppSettingsManagerVisualStudio",
+        "displayName": "Nahl AppSettings Manager"
     },
     "overview": "overview.md",
     "priceCategory": "free",
     "publisher": "muzammilkm",
     "private": false,
     "qna": true,
-    "repo": "https://github.com/muzammilkm/Nahl.AppSettingManger"
+    "repo": "https://github.com/muzammilkm/Nahl.AppSettingsManager"
 }

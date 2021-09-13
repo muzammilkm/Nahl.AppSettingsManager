@@ -1,8 +1,3 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - main
 
@@ -15,11 +10,11 @@ steps:
 - task: NuGetCommand@2
   inputs:
     command: 'restore'
-    restoreSolution: 'src\Nahl.AppSettingManager.sln'
+    restoreSolution: 'src\Nahl.AppSettingsManager.sln'
 
 - task: VSBuild@1
   inputs:
-    solution: 'src\Nahl.AppSettingManager.sln'
+    solution: 'src\Nahl.AppSettingsManager.sln'
     configuration: 'release'
     restoreNugetPackages: true
     createLogFile: true
@@ -27,7 +22,7 @@ steps:
 - task: PublishVisualStudioExtension@3
   inputs:
     connectedServiceName: 'Visual Studio MarketPlace'
-    vsixFile: 'src\Nahl.AppSettingManager.VisualStudio\bin\Release\Nahl.AppSettingManager.VisualStudio.vsix'
+    vsixFile: 'src\Nahl.AppSettingsManager.VisualStudio\bin\Release\Nahl.AppSettingsManager.VisualStudio.vsix'
     manifestFile: 'src\publishManifest.json'
     publisherId: 'muzammilkm'
     ignoreWarnings: 'VSIXValidatorWarning01,VSIXValidatorWarning02'

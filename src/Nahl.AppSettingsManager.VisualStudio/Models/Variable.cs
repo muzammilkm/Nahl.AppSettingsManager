@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Nahl.AppSettingManager.VisualStudio.Models
+namespace Nahl.AppSettingsManager.VisualStudio.Models
 {
     public class Variable : INotifyPropertyChanged
     {

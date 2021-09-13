@@ -13,8 +13,8 @@
     <ProjectGuid>{AF9A253B-5C26-4821-884A-5EE0E1C488D0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Nahl.AppSettingManager.VisualStudio</RootNamespace>
-    <AssemblyName>Nahl.AppSettingManager.VisualStudio</AssemblyName>
+    <RootNamespace>Nahl.AppSettingsManager.VisualStudio</RootNamespace>
+    <AssemblyName>Nahl.AppSettingsManager.VisualStudio</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <GeneratePkgDefFile>true</GeneratePkgDefFile>
     <UseCodebase>true</UseCodebase>
@@ -45,7 +45,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Commands\ManageAppSettingCommand.cs" />
+    <Compile Include="Commands\ManageAppSettingsCommand.cs" />
     <Compile Include="Extensions\GuidConstants.cs" />
     <Compile Include="Extensions\IntConstants.cs" />
     <Compile Include="Extensions\StringConstants.cs" />
@@ -54,10 +54,10 @@
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\Variable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="AppSettingManagerPackage.cs" />
-    <Compile Include="ToolWindows\AppSettingManagerToolWindow.cs" />
-    <Compile Include="ToolWindows\AppSettingManagerToolWindowControl.xaml.cs">
-      <DependentUpon>AppSettingManagerToolWindowControl.xaml</DependentUpon>
+    <Compile Include="AppSettingsManagerPackage.cs" />
+    <Compile Include="ToolWindows\AppSettingsManagerToolWindow.cs" />
+    <Compile Include="ToolWindows\AppSettingsManagerToolWindowControl.xaml.cs">
+      <DependentUpon>AppSettingsManagerToolWindowControl.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -83,7 +83,7 @@
     <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="16.11.15" />
   </ItemGroup>
   <ItemGroup>
-    <VSCTCompile Include="AppSettingManagerPackage.vsct">
+    <VSCTCompile Include="AppSettingsManagerPackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
     </VSCTCompile>
   </ItemGroup>
@@ -98,7 +98,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="ToolWindows\AppSettingManagerToolWindowControl.xaml">
+    <Page Include="ToolWindows\AppSettingsManagerToolWindowControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

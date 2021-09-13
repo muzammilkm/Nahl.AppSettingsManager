@@ -1,20 +1,16 @@
 ﻿using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
-using Nahl.AppSettingManager.VisualStudio.Extensions;
-using Nahl.AppSettingManager.VisualStudio.ToolWindows;
+using Nahl.AppSettingsManager.VisualStudio.Extensions;
+using Nahl.AppSettingsManager.VisualStudio.ToolWindows;
 using System;
 using System.ComponentModel.Design;
-using System.Globalization;
-using System.Threading;
-using System.Threading.Tasks;
 using Task = System.Threading.Tasks.Task;
 
-namespace Nahl.AppSettingManager.VisualStudio.Commands
+namespace Nahl.AppSettingsManager.VisualStudio.Commands
 {
     /// <summary>
     /// Command handler
     /// </summary>
-    internal sealed class ManageAppSettingCommand
+    internal sealed class ManageAppSettingsCommand
     {
         /// <summary>
         /// VS Package that provides this command, not null.
@@ -27,7 +23,7 @@ namespace Nahl.AppSettingManager.VisualStudio.Commands
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
         /// <param name="msc">Command service to add command to, not null.</param>
-        private ManageAppSettingCommand(AsyncPackage package, OleMenuCommandService msc)
+        private ManageAppSettingsCommand(AsyncPackage package, OleMenuCommandService msc)
         {
             this.package = package ?? throw new ArgumentNullException(nameof(package));
             msc = msc ?? throw new ArgumentNullException(nameof(msc));
@@ -40,7 +36,7 @@ namespace Nahl.AppSettingManager.VisualStudio.Commands
         /// <summary>
         /// Gets the instance of the command.
         /// </summary>
-        public static ManageAppSettingCommand Instance
+        public static ManageAppSettingsCommand Instance
         {
             get;
             private set;
@@ -69,14 +65,14 @@ namespace Nahl.AppSettingManager.VisualStudio.Commands
 
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
 
-            Instance = new ManageAppSettingCommand(package, msc);
+            Instance = new ManageAppSettingsCommand(package, msc);
         }
 
         private void ShowManageAppSettingForSolutionWindow(object sender, EventArgs e)
         {
             this.package.JoinableTaskFactory.RunAsync(async delegate
             {
-                var window = await this.package.ShowToolWindowAsync(typeof(AppSettingManagerToolWindow), 0, true, this.package.DisposalToken);
+                var window = await this.package.ShowToolWindowAsync(typeof(AppSettingsManagerToolWindow), 0, true, this.package.DisposalToken);
                 if ((null == window) || (null == window.Frame))
                 {
                     throw new NotSupportedException("Cannot create tool window");

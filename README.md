@@ -1,6 +1,12 @@
-# Nahl.AppSettingManger
+# Nahl.AppSettingsManger
 
-Visual Studio Extension for easy & better management of your appsetting across multiple project in given solution.
+Visual Studio Extension for easy & better management of your appsettings across multiple project in given solution.
+
+* View all your appseettings in one place in entire solution.
+* Filter variables across solution.
+* Update variables & values
+
+### Steps:
 
 ### Right Click on Solution in Solution Explorer
 ![Solution Screen](/screenshots/screen2.png "Extension is available in solution explorer")

@@ -1,19 +1,19 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Nahl.AppSettingManager.VisualStudio.Models
+namespace Nahl.AppSettingsManager.VisualStudio.Models
 {
-    public class AppSettingJsonFile : INotifyPropertyChanged
+    public class Project : INotifyPropertyChanged
     {
-        public AppSettingJsonFile()
+        public Project()
         {
 
         }
 
-        public AppSettingJsonFile(string fileId, string fileName)
+        public Project(string projectId, string projectName)
         {
-            FileId = fileId;
-            FileName = fileName;
+            ProjectId = projectId;
+            ProjectName = projectName;
         }
 
         private bool _isChecked;
@@ -28,9 +28,9 @@ namespace Nahl.AppSettingManager.VisualStudio.Models
             }
         }
 
-        public string FileId { get; set; }
+        public string ProjectId { get; set; }
 
-        public string FileName { get; set; }
+        public string ProjectName { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

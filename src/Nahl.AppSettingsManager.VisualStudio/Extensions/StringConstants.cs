@@ -1,4 +1,4 @@
-﻿namespace Nahl.AppSettingManager.VisualStudio.Extensions
+﻿namespace Nahl.AppSettingsManager.VisualStudio.Extensions
 {
     public static class StringConstants
     {

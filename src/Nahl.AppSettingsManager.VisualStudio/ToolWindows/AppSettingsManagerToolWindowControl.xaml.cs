@@ -2,21 +2,21 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Nahl.AppSettingManager.VisualStudio.ToolWindows
+namespace Nahl.AppSettingsManager.VisualStudio.ToolWindows
 {
-    public partial class AppSettingManagerToolWindowControl : UserControl
+    public partial class AppSettingsManagerToolWindowControl : UserControl
     {
         private readonly MainViewModel _viewModel;
 
-        public AppSettingManagerToolWindowControl()
+        public AppSettingsManagerToolWindowControl()
         {
             this.InitializeComponent();
 
             _viewModel = new MainViewModel();
             DataContext = _viewModel;
-            AppSettingManagerPackage.Instance.JoinableTaskFactory.RunAsync(() =>
+            AppSettingsManagerPackage.Instance.JoinableTaskFactory.RunAsync(() =>
             {
-                _viewModel.RefreshData(AppSettingManagerPackage.Instance.DTE);
+                _viewModel.RefreshData(AppSettingsManagerPackage.Instance.DTE);
                 return Task.CompletedTask;
             });
         }
@@ -36,9 +36,9 @@ namespace Nahl.AppSettingManager.VisualStudio.ToolWindows
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.SaveVariables();
-            AppSettingManagerPackage.Instance.JoinableTaskFactory.RunAsync(() =>
+            AppSettingsManagerPackage.Instance.JoinableTaskFactory.RunAsync(() =>
             {
-                _viewModel.RefreshData(AppSettingManagerPackage.Instance.DTE);
+                _viewModel.RefreshData(AppSettingsManagerPackage.Instance.DTE);
                 return Task.CompletedTask;
             });
         }

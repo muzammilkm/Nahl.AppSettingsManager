@@ -1,9 +1,9 @@
 ﻿using Microsoft.VisualStudio.Shell;
-using Nahl.AppSettingManager.VisualStudio.Extensions;
+using Nahl.AppSettingsManager.VisualStudio.Extensions;
 using System;
 using System.Runtime.InteropServices;
 
-namespace Nahl.AppSettingManager.VisualStudio.ToolWindows
+namespace Nahl.AppSettingsManager.VisualStudio.ToolWindows
 {
     /// <summary>
     /// This class implements the tool window exposed by this package and hosts a user control.
@@ -17,19 +17,19 @@ namespace Nahl.AppSettingManager.VisualStudio.ToolWindows
     /// </para>
     /// </remarks>
     [Guid(GuidConstants.WindowGuidString)]
-    public class AppSettingManagerToolWindow : ToolWindowPane
+    public class AppSettingsManagerToolWindow : ToolWindowPane
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AppSettingManagerToolWindow"/> class.
+        /// Initializes a new instance of the <see cref="AppSettingsManagerToolWindow"/> class.
         /// </summary>
-        public AppSettingManagerToolWindow() : base(null)
+        public AppSettingsManagerToolWindow() : base(null)
         {
             this.Caption = StringConstants.Title;           
 
             // This is the user control hosted by the tool window; Note that, even if this class implements IDisposable,
             // we are not calling Dispose on this object. This is because ToolWindowPane calls Dispose on
             // the object returned by the Content property.
-            this.Content = new AppSettingManagerToolWindowControl();
+            this.Content = new AppSettingsManagerToolWindowControl();
         }
     }
 }
