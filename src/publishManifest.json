@@ -3,7 +3,7 @@
     "categories": [ "build", "coding" ],
     "identity": {
         "internalName": "NahlAppSettingsManagerVisualStudio",
-        "displayName": "Nahl AppSettings Manager"
+        "displayName": "AppSettings Manager"
     },
     "overview": "overview.md",
     "priceCategory": "free",

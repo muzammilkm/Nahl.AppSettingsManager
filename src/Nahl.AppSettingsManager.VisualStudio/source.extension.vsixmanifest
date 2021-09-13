@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="2893bb83-1238-4ccf-ba7e-d26032e6a331" Version="1.0" Language="en-US" Publisher="muzammilkm" />
-        <DisplayName>Nahl.AppSettingsManager.VisualStudio</DisplayName>
+        <Identity Id="2893bb83-1238-4ccf-ba7e-d26032e6a331" Version="1.0.1" Language="en-US" Publisher="muzammilkm" />
+        <DisplayName>AppSettings Manager</DisplayName>
         <Description xml:space="preserve">Manage AppSettings for .net projects in VisualStudio across solutions</Description>
         <Icon>Resources\icon.png</Icon>
         <PreviewImage>Resources\preview.png</PreviewImage>
