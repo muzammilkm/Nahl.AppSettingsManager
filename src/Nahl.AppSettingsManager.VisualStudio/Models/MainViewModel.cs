@@ -331,12 +331,6 @@ namespace Nahl.AppSettingsManager.VisualStudio
                 var project = Projects.FirstOrDefault(x => x.ProjectId == variable.ProjectId);
                 variable.ProjectName = project.ProjectName;
             }
-
-            if (e.PropertyName == "FileName")
-            {
-                var appSettingJsonFile = AppSettingJsonFiles.FirstOrDefault(x => x.FileName == variable.FileName);
-                variable.FileName = appSettingJsonFile.FileName;
-            }
         }
 
         public void Reset()
