@@ -17,7 +17,7 @@ namespace Nahl.AppSettingsManager.VisualStudio
     public class MainViewModel : INotifyPropertyChanged
     {
         private ICollectionView _variablesView;
-        private string _searchVariable;
+        private string _searchKeyword;
         private string _selectedProjectNamePreview;
         private string _selectedAppSettingFileNamePreview;
         private Project _selectedProject;
@@ -27,7 +27,7 @@ namespace Nahl.AppSettingsManager.VisualStudio
         private ObservableCollection<AppSettingJsonFile> _appSettingJsonFiles;
         private ObservableCollection<Variable> _variables;
         private int _totalVariableCount;
-        private bool _isSearchVariable;
+        private bool _isSearchKeyword;
 
         public MainViewModel()
         {
@@ -41,23 +41,23 @@ namespace Nahl.AppSettingsManager.VisualStudio
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public string SearchVariable
+        public string SearchKeyword
         {
-            get => _searchVariable;
+            get => _searchKeyword;
             set
             {
-                _searchVariable = value;
-                IsSearchVariable = !string.IsNullOrEmpty(_searchVariable);
+                _searchKeyword = value;
+                IsSearchKeyword = !string.IsNullOrEmpty(_searchKeyword);
                 OnPropertyChanged();
             }
         }
 
-        public bool IsSearchVariable
+        public bool IsSearchKeyword
         {
-            get => _isSearchVariable;
+            get => _isSearchKeyword;
             set
             {
-                _isSearchVariable = value;
+                _isSearchKeyword = value;
                 OnPropertyChanged();
             }
         }
@@ -110,20 +110,21 @@ namespace Nahl.AppSettingsManager.VisualStudio
 
         public void SaveVariables()
         {
-            foreach (var project in Projects)
+            var modifiedVariables = Variables
+                .Where(x => x.IsDirty)
+                .GroupBy(x=> new { x.ProjectId, x.FileName });
+
+            foreach(var modifiedVariable in modifiedVariables)
             {
-                foreach (var appSettingJsonFile in AppSettingJsonFiles)
-                {
-                    var variables = Variables
-                        .Where(x => x.ProjectId == project.ProjectId && x.FileName == appSettingJsonFile.FileName)
+                var variables = Variables
+                        .Where(x => x.ProjectId == modifiedVariable.Key.ProjectId && x.FileName == modifiedVariable.Key.FileName)
                         .ToDictionary(x => x.Name, x => x.Value);
 
-                    var betterDictionary = DotNotationToDictionary(variables);
-                    var json = JsonConvert.SerializeObject(betterDictionary, Formatting.Indented);
-                    var jsonPath = Path.GetDirectoryName(project.ProjectId);
+                var betterDictionary = DotNotationToDictionary(variables);
+                var json = JsonConvert.SerializeObject(betterDictionary, Formatting.Indented);
+                var jsonPath = $@"{Path.GetDirectoryName(modifiedVariable.Key.ProjectId)}\{modifiedVariable.Key.FileName}";
 
-                    File.WriteAllText($@"{jsonPath}\{appSettingJsonFile.FileName}", json);
-                }
+                File.WriteAllText(jsonPath, json);
             }
             IsDirty = false;
         }
@@ -340,7 +341,7 @@ namespace Nahl.AppSettingsManager.VisualStudio
 
         public void Reset()
         {
-            SearchVariable = "";
+            SearchKeyword = "";
             SelectedProjectNamePreview = "";
 
             foreach (var project in Projects)
@@ -375,8 +376,8 @@ namespace Nahl.AppSettingsManager.VisualStudio
             if (SelectedAppSettingJsonFiles != null && !SelectedAppSettingJsonFiles.Any(x => x.FileName == variable.FileName))
                 return false;
 
-            return string.IsNullOrWhiteSpace(_searchVariable) || variable.Name.ToLower().Contains(_searchVariable.ToLower());
-
+            return string.IsNullOrWhiteSpace(_searchKeyword) || 
+                variable.Name.ToLower().Contains(_searchKeyword.ToLower()) || variable.Value.ToLower().Contains(_searchKeyword.ToLower());
         }
 
         private void UpdateProjectNamePreview()
@@ -421,7 +422,7 @@ namespace Nahl.AppSettingsManager.VisualStudio
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-            if (propertyName == "SearchVariable" ||
+            if (propertyName == "SearchKeyword" ||
                 propertyName == "SelectedProjectNamePreview" ||
                 propertyName == "SelectedAppSettingFileNamePreview")
                 _variablesView.Refresh();

@@ -3,8 +3,8 @@
 Visual Studio Extension for easy & better management of your appsettings across multiple project in given solution.
 
 * View all your appseettings in one place in entire solution.
-* Filter variables across solution.
-* Update variables & values
+* Search variable & value across solution.
+* Update variables & values across project
 
 ### Steps:
 
