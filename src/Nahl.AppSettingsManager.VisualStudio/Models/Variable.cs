@@ -10,11 +10,10 @@ namespace Nahl.AppSettingsManager.VisualStudio.Models
             IsNew = true;
         }
 
-        public Variable(string projectId, string projectName, string fileId, string fileName, string name, string value)
+        public Variable(string projectId, string projectName, string fileName, string name, string value)
         {
             _old_projectId = _projectId = projectId;
             _old_projectName = _projectName = projectName;
-            _old_fileId = _fileId = fileId;
             _old_fileName = _fileName = fileName;
             _old_name = _name = name;
             _old_value = _value = value;
@@ -23,14 +22,12 @@ namespace Nahl.AppSettingsManager.VisualStudio.Models
 
         private string _old_name;
         private string _old_value;
-        private string _old_fileId;
         private string _old_projectId;
         private string _old_projectName;
         private string _old_fileName;
 
         private string _name;
         private string _value;
-        private string _fileId;
         private string _projectId;
         private string _projectName;
         private string _fileName;
@@ -58,12 +55,12 @@ namespace Nahl.AppSettingsManager.VisualStudio.Models
             }
         }
 
-        public string FileId
+        public string FileName
         {
-            get => _fileId;
+            get => _fileName;
             set
             {
-                _fileId = value;
+                _fileName = value;
                 OnPropertyChanged();
                 CheckIsChanged();
             }
@@ -82,8 +79,8 @@ namespace Nahl.AppSettingsManager.VisualStudio.Models
 
         private void CheckIsChanged()
         {
-            IsDirty = (_old_projectId != _projectId || _old_projectName != _projectName ||
-                _old_fileId != _fileId || _old_fileName != _fileName ||
+            IsDirty = (_old_projectId != _projectId || _old_projectName != _projectName || 
+                _old_fileName != _fileName ||
                 _old_name != _name || _old_value != _value);
         }
 
@@ -101,8 +98,6 @@ namespace Nahl.AppSettingsManager.VisualStudio.Models
         public bool IsDuplicate { get; set; }
 
         public string ProjectName { get => _projectName; set => _projectName = value; }
-
-        public string FileName { get => _fileName; set => _fileName = value; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

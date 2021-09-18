@@ -115,12 +115,14 @@ namespace Nahl.AppSettingsManager.VisualStudio
                 foreach (var appSettingJsonFile in AppSettingJsonFiles)
                 {
                     var variables = Variables
-                        .Where(x => x.ProjectId == project.ProjectId && x.FileId == appSettingJsonFile.FileId)
+                        .Where(x => x.ProjectId == project.ProjectId && x.FileName == appSettingJsonFile.FileName)
                         .ToDictionary(x => x.Name, x => x.Value);
 
                     var betterDictionary = DotNotationToDictionary(variables);
                     var json = JsonConvert.SerializeObject(betterDictionary, Formatting.Indented);
-                    File.WriteAllText($"{appSettingJsonFile.FileId}", json);
+                    var jsonPath = Path.GetDirectoryName(project.ProjectId);
+
+                    File.WriteAllText($@"{jsonPath}\{appSettingJsonFile.FileName}", json);
                 }
             }
             IsDirty = false;
@@ -243,7 +245,7 @@ namespace Nahl.AppSettingsManager.VisualStudio
                         .ToDictionary(t => t.Path, t => t.ToString());
                     foreach (var json in jsonContent)
                     {
-                        AddVariable(p.FileName, p.Name, file, Path.GetFileName(file), json.Key, json.Value);
+                        AddVariable(p.FileName, p.Name, Path.GetFileName(file), json.Key, json.Value);
                     }
                 }
             }            
@@ -257,10 +259,10 @@ namespace Nahl.AppSettingsManager.VisualStudio
                 _projects.Add(project);
             }
 
-            var appSettingJsonFileGroups = Variables.GroupBy(x => new { x.FileId, x.FileName });
+            var appSettingJsonFileGroups = Variables.GroupBy(x => new { x.FileName });
             foreach (var group in appSettingJsonFileGroups)
             {
-                var appSettingJsonFile = new AppSettingJsonFile(group.Key.FileId, group.Key.FileName);
+                var appSettingJsonFile = new AppSettingJsonFile(group.Key.FileName);
                 appSettingJsonFile.PropertyChanged += AppSettingJsonFile_PropertyChanged;
                 _appSettingJsonFiles.Add(appSettingJsonFile);
             }
@@ -284,7 +286,6 @@ namespace Nahl.AppSettingsManager.VisualStudio
                             variable.ProjectName = project.ProjectName;
 
                             var appSettingJsonFile = AppSettingJsonFiles.FirstOrDefault();
-                            variable.FileId = appSettingJsonFile.FileId;
                             variable.FileName = appSettingJsonFile.FileName;
                         }
                     }
@@ -309,9 +310,9 @@ namespace Nahl.AppSettingsManager.VisualStudio
             }
         }
 
-        private void AddVariable(string projectId, string projectName, string fileId, string fileName, string name, string value)
+        private void AddVariable(string projectId, string projectName, string fileName, string name, string value)
         {
-            var variable = new Variable(projectId, projectName, fileId, fileName, name, value);
+            var variable = new Variable(projectId, projectName, fileName, name, value);
             //variable.PropertyChanged += Variable_PropertyChanged;
             _variables.Add(variable);
         }
@@ -330,9 +331,9 @@ namespace Nahl.AppSettingsManager.VisualStudio
                 variable.ProjectName = project.ProjectName;
             }
 
-            if (e.PropertyName == "FileId")
+            if (e.PropertyName == "FileName")
             {
-                var appSettingJsonFile = AppSettingJsonFiles.FirstOrDefault(x => x.FileId == variable.FileId);
+                var appSettingJsonFile = AppSettingJsonFiles.FirstOrDefault(x => x.FileName == variable.FileName);
                 variable.FileName = appSettingJsonFile.FileName;
             }
         }
@@ -371,7 +372,7 @@ namespace Nahl.AppSettingsManager.VisualStudio
             if (SelectedProjects != null && !SelectedProjects.Any(x => x.ProjectId == variable.ProjectId))
                 return false;
 
-            if (SelectedAppSettingJsonFiles != null && !SelectedAppSettingJsonFiles.Any(x => x.FileId == variable.FileId))
+            if (SelectedAppSettingJsonFiles != null && !SelectedAppSettingJsonFiles.Any(x => x.FileName == variable.FileName))
                 return false;
 
             return string.IsNullOrWhiteSpace(_searchVariable) || variable.Name.ToLower().Contains(_searchVariable.ToLower());

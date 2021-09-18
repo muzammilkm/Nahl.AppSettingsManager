@@ -132,7 +132,7 @@
                         </Style>
                     </DataGridTextColumn.EditingElementStyle>
                 </DataGridTextColumn>
-                <DataGridComboBoxColumn Header="App Settings" Width="2*" SelectedValueBinding="{Binding FileId}" DisplayMemberPath="FileName" SelectedValuePath="FileId">
+                <DataGridComboBoxColumn Header="App Settings" Width="2*" SelectedValueBinding="{Binding FileName}" DisplayMemberPath="FileName" SelectedValuePath="FileName">
                     <DataGridComboBoxColumn.ElementStyle>
                         <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
                             <Setter Property="ItemsSource" Value="{Binding Path=DataContext.AppSettingJsonFiles, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />

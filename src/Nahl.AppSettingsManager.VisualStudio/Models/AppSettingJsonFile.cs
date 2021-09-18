@@ -5,14 +5,8 @@ namespace Nahl.AppSettingsManager.VisualStudio.Models
 {
     public class AppSettingJsonFile : INotifyPropertyChanged
     {
-        public AppSettingJsonFile()
+        public AppSettingJsonFile(string fileName)
         {
-
-        }
-
-        public AppSettingJsonFile(string fileId, string fileName)
-        {
-            FileId = fileId;
             FileName = fileName;
         }
 
@@ -27,8 +21,6 @@ namespace Nahl.AppSettingsManager.VisualStudio.Models
                 OnPropertyChanged();
             }
         }
-
-        public string FileId { get; set; }
 
         public string FileName { get; set; }
 
