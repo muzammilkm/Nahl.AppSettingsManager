@@ -10,12 +10,35 @@ pool:
   vmImage: 'windows-latest'
 
 steps:
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      $files=$(git diff HEAD HEAD~ --name-only)
+      $temp=$files -split ' '
+      $count=$temp.Length
+      For ($i=0; $i -lt $temp.Length; $i++)
+      {
+        $name=$temp[$i]
+        echo "this is $name file"
+        if ($name -like "Nahl.AppSettingsManager.VisualStudio/*")
+          {
+            Write-Host "##vso[task.setvariable variable=VisualStudio]True"
+          }
+        if ($name -like "Nahl.AppSettingsManager.VisualStudioCode/*")
+          {
+            Write-Host "##vso[task.setvariable variable=VisualStudioCode]True"
+          }
+      }
+
 - task: NuGetToolInstaller@1
+  condition: and(succeeded(), eq(variables['VisualStudio'], 'True'))
 
 - task: NuGetCommand@2
   inputs:
     command: 'restore'
     restoreSolution: 'src\Nahl.AppSettingsManager.sln'
+  condition: and(succeeded(), eq(variables['VisualStudio'], 'True'))
 
 - task: VSBuild@1
   inputs:
@@ -23,6 +46,7 @@ steps:
     configuration: 'release'
     restoreNugetPackages: true
     createLogFile: true
+  condition: and(succeeded(), eq(variables['VisualStudio'], 'True'))
 
 - task: PublishVisualStudioExtension@3
   inputs:
@@ -31,3 +55,4 @@ steps:
     manifestFile: 'src\publishManifest.json'
     publisherId: 'muzammilkm'
     ignoreWarnings: 'VSIXValidatorWarning01,VSIXValidatorWarning02'
+  condition: and(succeeded(), eq(variables['VisualStudio'], 'True'))
