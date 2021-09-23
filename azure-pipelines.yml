@@ -21,11 +21,11 @@ steps:
       {
         $name=$temp[$i]
         echo "this is $name file"
-        if ($name -like "Nahl.AppSettingsManager.VisualStudio/*")
+        if ($name -like "*/Nahl.AppSettingsManager.VisualStudio/*")
           {
             Write-Host "##vso[task.setvariable variable=VisualStudio]True"
           }
-        if ($name -like "Nahl.AppSettingsManager.VisualStudioCode/*")
+        if ($name -like "*/Nahl.AppSettingsManager.VisualStudioCode/*")
           {
             Write-Host "##vso[task.setvariable variable=VisualStudioCode]True"
           }
