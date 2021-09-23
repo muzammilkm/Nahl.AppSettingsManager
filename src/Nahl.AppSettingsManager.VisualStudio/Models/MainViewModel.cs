@@ -232,12 +232,22 @@ namespace Nahl.AppSettingsManager.VisualStudio
 
                 foreach (var p in projects)
                 {
-                    var projDir = Path.GetDirectoryName(p.FullName);
-                    var jsonFiles = Directory.GetFiles(projDir, "appsettings*.json");
+                    var jsonFiles = new List<string>();
 
-                    if (!jsonFiles.Any())
-                        continue;
+                    try
+                    {
+                        Logger.Log(p.FullName);
 
+                        var projDir = Path.GetDirectoryName(p.FullName);
+                        jsonFiles = Directory.GetFiles(projDir, "appsettings*.json").ToList();
+
+                        if (!jsonFiles.Any())
+                            continue;
+                    }
+                    catch(Exception ex)
+                    {
+                        Logger.Log(ex);
+                    }
                     foreach (var file in jsonFiles)
                     {
                         var fileContent = File.ReadAllText(file);
