@@ -18,7 +18,7 @@ namespace Nahl.AppSettingsManager.VisualStudio.ToolWindows
             {
                 _viewModel.RefreshData(AppSettingsManagerPackage.Instance.DTE);
 
-                Logger.Log("Ready");
+                Logger.Log("Ready!");
                 return Task.CompletedTask;
             });
         }
