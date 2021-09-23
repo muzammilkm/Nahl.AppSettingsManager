@@ -31,6 +31,7 @@ namespace Nahl.AppSettingsManager.VisualStudio
             DTE = await GetServiceAsync(typeof(DTE)) as DTE2;
 
             await ManageAppSettingsCommand.InitializeAsync(this);
+            Logger.Initialize(this, "AppSettings Manager");
         }
     }
 }

@@ -31,6 +31,7 @@ namespace Nahl.AppSettingsManager.VisualStudio.Commands
             var manageAppSettingsForSolutionCommandId = new CommandID(GuidConstants.CommandSetGuid, IntConstants.ManageAppSettingCommandId);
             var menuItem = new OleMenuCommand(ShowManageAppSettingForSolutionWindow, manageAppSettingsForSolutionCommandId);
             msc.AddCommand(menuItem);
+            Logger.Log("Add command");
         }
 
         /// <summary>
@@ -72,10 +73,17 @@ namespace Nahl.AppSettingsManager.VisualStudio.Commands
         {
             this.package.JoinableTaskFactory.RunAsync(async delegate
             {
-                var window = await this.package.ShowToolWindowAsync(typeof(AppSettingsManagerToolWindow), 0, true, this.package.DisposalToken);
-                if ((null == window) || (null == window.Frame))
+                try
                 {
-                    throw new NotSupportedException("Cannot create tool window");
+                    var window = await this.package.ShowToolWindowAsync(typeof(AppSettingsManagerToolWindow), 0, true, this.package.DisposalToken);
+                    if ((null == window) || (null == window.Frame))
+                    {
+                        Logger.Log("Cannot find AppSettings Manager window");
+                        throw new NotSupportedException("Cannot create tool window");
+                    }
+                }catch(Exception ex)
+                {
+                    Logger.Log(ex);
                 }
             });
         }

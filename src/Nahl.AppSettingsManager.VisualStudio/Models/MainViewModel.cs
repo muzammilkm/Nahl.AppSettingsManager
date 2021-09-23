@@ -112,9 +112,9 @@ namespace Nahl.AppSettingsManager.VisualStudio
         {
             var modifiedVariables = Variables
                 .Where(x => x.IsDirty)
-                .GroupBy(x=> new { x.ProjectId, x.FileName });
+                .GroupBy(x => new { x.ProjectId, x.FileName });
 
-            foreach(var modifiedVariable in modifiedVariables)
+            foreach (var modifiedVariable in modifiedVariables)
             {
                 var variables = Variables
                         .Where(x => x.ProjectId == modifiedVariable.Key.ProjectId && x.FileName == modifiedVariable.Key.FileName)
@@ -222,50 +222,57 @@ namespace Nahl.AppSettingsManager.VisualStudio
         }
         public void RefreshData(DTE2 dTE)
         {
-            _variables.Clear();
-            _projects.Clear();
-            _appSettingJsonFiles.Clear();
-
-            var projects = GetSolutionProjects(dTE.Solution.OfType<EnvDTE.Project>());
-
-            foreach (var p in projects)
+            try
             {
-                var projDir = Path.GetDirectoryName(p.FullName);
-                var jsonFiles = Directory.GetFiles(projDir, "appsettings*.json");
+                _variables.Clear();
+                _projects.Clear();
+                _appSettingJsonFiles.Clear();
 
-                if (!jsonFiles.Any())
-                    continue;
+                var projects = GetSolutionProjects(dTE.Solution.OfType<EnvDTE.Project>());
 
-                foreach (var file in jsonFiles)
+                foreach (var p in projects)
                 {
-                    var fileContent = File.ReadAllText(file);
-                    var appSettingObject = JObject.Parse(fileContent);
-                    var jsonContent = appSettingObject
-                        .SelectTokens("$..*")
-                        .Where(t => !t.HasValues)
-                        .ToDictionary(t => t.Path, t => t.ToString());
-                    foreach (var json in jsonContent)
+                    var projDir = Path.GetDirectoryName(p.FullName);
+                    var jsonFiles = Directory.GetFiles(projDir, "appsettings*.json");
+
+                    if (!jsonFiles.Any())
+                        continue;
+
+                    foreach (var file in jsonFiles)
                     {
-                        AddVariable(p.FileName, p.Name, Path.GetFileName(file), json.Key, json.Value);
+                        var fileContent = File.ReadAllText(file);
+                        var appSettingObject = JObject.Parse(fileContent);
+                        var jsonContent = appSettingObject
+                            .SelectTokens("$..*")
+                            .Where(t => !t.HasValues)
+                            .ToDictionary(t => t.Path, t => t.ToString());
+                        foreach (var json in jsonContent)
+                        {
+                            AddVariable(p.FileName, p.Name, Path.GetFileName(file), json.Key, json.Value);
+                        }
                     }
                 }
-            }            
 
-            _totalVariableCount = Variables.Count;
-            var projectGroups = Variables.GroupBy(x => new { x.ProjectId, x.ProjectName });
-            foreach (var group in projectGroups)
-            {
-                var project = new Project(group.Key.ProjectId, group.Key.ProjectName);
-                project.PropertyChanged += Project_PropertyChanged;
-                _projects.Add(project);
+                _totalVariableCount = Variables.Count;
+                var projectGroups = Variables.GroupBy(x => new { x.ProjectId, x.ProjectName });
+                foreach (var group in projectGroups)
+                {
+                    var project = new Project(group.Key.ProjectId, group.Key.ProjectName);
+                    project.PropertyChanged += Project_PropertyChanged;
+                    _projects.Add(project);
+                }
+
+                var appSettingJsonFileGroups = Variables.GroupBy(x => new { x.FileName });
+                foreach (var group in appSettingJsonFileGroups)
+                {
+                    var appSettingJsonFile = new AppSettingJsonFile(group.Key.FileName);
+                    appSettingJsonFile.PropertyChanged += AppSettingJsonFile_PropertyChanged;
+                    _appSettingJsonFiles.Add(appSettingJsonFile);
+                }
             }
-
-            var appSettingJsonFileGroups = Variables.GroupBy(x => new { x.FileName });
-            foreach (var group in appSettingJsonFileGroups)
+            catch (Exception ex)
             {
-                var appSettingJsonFile = new AppSettingJsonFile(group.Key.FileName);
-                appSettingJsonFile.PropertyChanged += AppSettingJsonFile_PropertyChanged;
-                _appSettingJsonFiles.Add(appSettingJsonFile);
+                Logger.Log(ex);
             }
         }
 
@@ -370,7 +377,7 @@ namespace Nahl.AppSettingsManager.VisualStudio
             if (SelectedAppSettingJsonFiles != null && !SelectedAppSettingJsonFiles.Any(x => x.FileName == variable.FileName))
                 return false;
 
-            return string.IsNullOrWhiteSpace(_searchKeyword) || 
+            return string.IsNullOrWhiteSpace(_searchKeyword) ||
                 variable.Name.ToLower().Contains(_searchKeyword.ToLower()) || variable.Value.ToLower().Contains(_searchKeyword.ToLower());
         }
 

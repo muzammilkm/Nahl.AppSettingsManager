@@ -17,6 +17,8 @@ namespace Nahl.AppSettingsManager.VisualStudio.ToolWindows
             AppSettingsManagerPackage.Instance.JoinableTaskFactory.RunAsync(() =>
             {
                 _viewModel.RefreshData(AppSettingsManagerPackage.Instance.DTE);
+
+                Logger.Log("Ready");
                 return Task.CompletedTask;
             });
         }
