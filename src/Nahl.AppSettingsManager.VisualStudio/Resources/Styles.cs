@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualStudio.PlatformUI;
-using Microsoft.VisualStudio.Shell;
+﻿using Microsoft.VisualStudio.Shell;
 
 namespace Nahl.AppSettingsManager.VisualStudio.Resources
 {
@@ -9,7 +8,7 @@ namespace Nahl.AppSettingsManager.VisualStudio.Resources
 
         public static object ButtonStyleKey => VsResourceKeys.ThemedDialogButtonStyleKey;
 
-        public static object TextBoxStyleKey => VsResourceKeys.ThemedDialogTextBoxStyleKey;
+        public static object TextBoxStyleKey => VsResourceKeys.TextBoxStyleKey;
 
         public static object LabelStyleKey => VsResourceKeys.ThemedDialogLabelStyleKey;
 
