@@ -81,7 +81,8 @@ namespace Nahl.AppSettingsManager.VisualStudio.Commands
                         Logger.Log("Cannot find AppSettings Manager window");
                         throw new NotSupportedException("Cannot create tool window");
                     }
-                }catch(Exception ex)
+                }
+                catch (Exception ex)
                 {
                     Logger.Log(ex);
                 }

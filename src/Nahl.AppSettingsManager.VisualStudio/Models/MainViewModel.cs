@@ -113,20 +113,26 @@ namespace Nahl.AppSettingsManager.VisualStudio
             var modifiedVariables = Variables
                 .Where(x => x.IsDirty)
                 .GroupBy(x => new { x.ProjectId, x.FileName });
-
-            foreach (var modifiedVariable in modifiedVariables)
+            try
             {
-                var variables = Variables
-                        .Where(x => x.ProjectId == modifiedVariable.Key.ProjectId && x.FileName == modifiedVariable.Key.FileName)
-                        .ToDictionary(x => x.Name, x => x.Value);
+                foreach (var modifiedVariable in modifiedVariables)
+                {
+                    var variables = Variables
+                            .Where(x => x.ProjectId == modifiedVariable.Key.ProjectId && x.FileName == modifiedVariable.Key.FileName)
+                            .ToDictionary(x => x.Name, x => x.Value);
 
-                var betterDictionary = DotNotationToDictionary(variables);
-                var json = JsonConvert.SerializeObject(betterDictionary, Formatting.Indented);
-                var jsonPath = $@"{Path.GetDirectoryName(modifiedVariable.Key.ProjectId)}\{modifiedVariable.Key.FileName}";
+                    var betterDictionary = DotNotationToDictionary(variables);
+                    var json = JsonConvert.SerializeObject(betterDictionary, Formatting.Indented);
+                    var jsonPath = $@"{Path.GetDirectoryName(modifiedVariable.Key.ProjectId)}\{modifiedVariable.Key.FileName}";
 
-                File.WriteAllText(jsonPath, json);
+                    File.WriteAllText(jsonPath, json);
+                }
+                IsDirty = false;
             }
-            IsDirty = false;
+            catch(Exception ex)
+            {
+                Logger.Log(ex);
+            }
         }
 
         public ObservableCollection<Project> Projects { get => _projects; set { _projects = value; OnPropertyChanged(); } }

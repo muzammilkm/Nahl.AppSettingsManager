@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -37,10 +38,16 @@ namespace Nahl.AppSettingsManager.VisualStudio.ToolWindows
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            _viewModel.SaveVariables();
             AppSettingsManagerPackage.Instance.JoinableTaskFactory.RunAsync(() =>
             {
-                _viewModel.RefreshData(AppSettingsManagerPackage.Instance.DTE);
+                try
+                {
+                    _viewModel.SaveVariables();
+                }
+                catch (Exception ex)
+                {
+                    Logger.Log(ex);
+                }
                 return Task.CompletedTask;
             });
         }
